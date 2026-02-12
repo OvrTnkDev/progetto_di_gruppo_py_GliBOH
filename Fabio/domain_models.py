@@ -14,52 +14,85 @@ Output atteso: Un file pulito con solo le classi dei prodotti."""
 
 # creazione classe base
 class Elettrodomestico():
-    
-    # costruttore
-    def __init__(self, marca, modello, anno_acquisto, guasto, costo_base_diagnosi = 50):
+    def __init__(self, marca, modello, anno_acquisto, guasto):
+        # Attributi privati
         self.__marca = marca
         self.__modello = modello
         self.__anno_acquisto = anno_acquisto
         self.__guasto = guasto
-        self.__costo_base_diagnosi = costo_base_diagnosi
     
-    def getter(self, tipo):
-        tipo = tipo.lower()
-        
-        if tipo == "mc":
-            return self.__marca
-        elif tipo == "mo":
-            return self.__modello
-        elif tipo == "aa":
-            return self.__anno_acquisto
-        elif tipo == "gs":
-            return self.__guasto
-        elif tipo == "cbd":
-            return self.__costo_base_diagnosi
+    # Getters e Setters Espliciti
+    def get_marca(self):
+        return self.__marca
+    
+    def get_modello(self):
+        return self.__modello
+    
+    def get_anno_acquisto(self):
+        return self.__anno_acquisto
+    
+    def set_anno_acquisto(self, anno):
+        # controllo
+        if anno > 2025: 
+            print("Errore: Anno nel futuro non valido")
         else:
-            print("Errore di richiesta!")
-    
+            self.__anno_acquisto = anno
+
+    def get_guasto(self):
+        return self.__guasto
+
     def descrizione(self):
-        return f"marca: {self.__marca}\nmodello: {self.__modello}\nanno_acquisto: {self.__anno_acquisto}\nguasto: {self.__guasto}"
+        return f"Marca: {self.__marca}\nModello: {self.__modello}\nAnno: {self.__anno_acquisto}\nGuasto: {self.__guasto}\n"
     
     def stima_costo_base(self):
-        return f"\ncosto base riparazione: {self.getter("cbd")}"
+        return 49.99
 
 
 # creazione classe Lavatrice
 class Lavatrice(Elettrodomestico):
-    pass
+    def __init__(self, marca, modello, anno_acquisto, guasto, capacita_kg, giri_centrifuga):
+        # Chiamata al costruttore del padre
+        super().__init__(marca, modello, anno_acquisto, guasto)
+        self.__capacita_kg = capacita_kg
+        self.__giri_centrifuga = giri_centrifuga
+    
+    # Polimorfismo: Override del metodo base
+    def stima_costo_base(self):
+        costo = super().stima_costo_base()
+        if self.__capacita_kg > 10:
+            costo += 19.99
+        return costo
 
 # creazione classe Frigorifero
 class Frigorifero(Elettrodomestico):
-    pass
+    def __init__(self, marca, modello, anno_acquisto, guasto, litri, ha_freezer):
+        super().__init__(marca, modello, anno_acquisto, guasto)
+        self.__litri = litri
+        self.__ha_freezer = ha_freezer
+        
+        # Polimorfismo: Override del metodo base
+    def stima_costo_base(self):
+        costo = super().stima_costo_base()
+        if self.__ha_freezer:
+            costo += 39.99
+        return costo
 
 # creazione classe Forno
 class Forno(Elettrodomestico):
-    pass
+    def __init__(self, marca, modello, anno_acquisto, guasto, tipo_alimentazione, ha_ventilato):
+        super().__init__(marca, modello, anno_acquisto, guasto)
+        self.__tipo_alimentazione = tipo_alimentazione
+        self.__ha_ventilato = ha_ventilato
+        
+        # Polimorfismo: Override del metodo base
+    def stima_costo_base(self):
+        costo = super().stima_costo_base()
+        if self.__tipo_alimentazione == "gas":
+            costo += 49.99
+        return costo
 
 
 # prove
-ele = Elettrodomestico("samsung", "sess1234", 1998, "rotore")
-print(ele.descrizione())
-print(ele.stima_costo_base())
+l = Lavatrice("Samsung", "EcoBubble", 2020, "Non scarica", 12, 1200)
+print(l.descrizione())
+print(f"Preventivo base: {l.stima_costo_base()}€")
