@@ -1,81 +1,85 @@
-## progetto_di_gruppo_py_GliBOH
+# 🔧 Progetto Gestionale Officina "GliBOH"
 
-# Traccia
-- Concetti obbligatori: incapsulamento, ereditarietà, polimorfismo, uso di type() per controllare gli oggetti e metodi "variatici" (con parametri variabili).
-Stai progettando il software di base per un'officina che si occupa di riparare elettrodomestici (lavatrici, frigoriferi, forni, ecc.). Il programma dovrà modellare gli elettrodomestici, i ticket di riparazione e alcune operazioni dell'officina, usando la programmazione ad oggetti.
+Software gestionale modulare in Python per un'officina di riparazione elettrodomestici. Il progetto implementa i paradigmi fondamentali della Programmazione Orientata agli Oggetti (OOP).
 
-1. Classe base: Elettrodomestico
-Crea una classe base chiamata Elettrodomestico che rappresenti un elettrodomestico generico. Attributi (incapsulati, cioè privati):
-__marca (stringa)
-__modello (stringa)
-__anno_acquisto (intero)
-__guasto (stringa che descrive il problema principale)
-
-Metodi:
-Costruttore __init__(self, marca, modello, anno_acquisto, guasto)
-Getter e setter per tutti gli attributi, con eventuali controlli minimi (es. l'anno non può essere nel futuro).
-descrizione(self): restituisce una stringa con marca, modello, anno e guasto.
-stima_costo_base(self): restituisce un valore numerico generico (es. costo base di diagnosi).
-Regola 1 - Incapsulamento: tutti gli attributi devono essere privati (__attributo) e accessibili solo tramite getter/setter.
-
-2. Classi derivate (Ereditarietà + Polimorfismo)
-Crea almeno tre sottoclassi di Elettrodomestico:
-
-Lavatrice
-Attributi aggiuntivi: capacita_kg (intero), giri_centrifuga (intero).
-Override di stima_costo_base(self): la lavatrice ha un costo base diverso (ad esempio, maggiorato se la capacità è elevata).
-
-Frigorifero
-Attributi aggiuntivi: litri (intero), ha_freezer (booleano).
-Override di stima_costo_base(self): il costo può cambiare se ha il freezer o se i litri superano una certa soglia.
-
-Forno
-Attributi aggiuntivi: tipo_alimentazione (stringa: "elettrico", "gas"), ha_ventilato (booleano).
-Override di stima_costo_base(self): il costo può cambiare in base al tipo di alimentazione e alla presenza della funzione ventilata.
-
-Regola 2 - Ereditarietà: tutte le classi derivate devono usare Elettrodomestico come classe base ed ereditare i suoi attributi tramite super() nel costruttore. Regola 3 - Polimorfismo: tutte le sottoclassi devono fornire la propria versione di stima_costo_base(self), in modo che la chiamata a questo metodo su una lista mista di oggetti (Lavatrice, Frigorifero, Forno) produca risultati diversi a seconda del tipo.
-
-3. Classe TicketRiparazione
-Crea una classe TicketRiparazione che rappresenta un ticket aperto in officina. Attributi (incapsulati):
-__id_ticket (intero o stringa univoca)
-__elettrodomestico (un oggetto di tipo Elettrodomestico o sottoclasse)
-__stato (stringa: "aperto", "in lavorazione", "chiusa")
-__note (lista di stringhe, inizialmente vuota)
-
-Metodi:
-Costruttore __init__(self, id_ticket, elettrodomestico)
-Getter e setter necessari (ad esempio per stato e note).
-aggiungi_nota(self, testo) per aggiungere una nota.
-*calcola_preventivo(self, voci_extra) -> metodo variadico:
-usa elettrodomestico.stima_costo_base() come costo di partenza
-somma tutte le voci extra passate come parametri (*voci_extra)
-
-restituisce il totale. Nota: questo metodo deve funzionare con qualsiasi sottoclasse di Elettrodomestico (polimorfismo sul metodo stima_costo_base).
-
-4. Classe Officina
-Crea una classe Officina che gestisce i ticket e gli elettrodomestici. Attributi:
-nome (stringa)
-tickets (lista di oggetti TicketRiparazione)
-
-Metodi:
-aggiungi_ticket(self, ticket)
-chiudi_ticket(self, id_ticket)
-stampa_ticket_aperti(self): mostra ID, tipo di elettrodomestico e stato.
-totale_preventivi(self): somma i preventivi di tutti i ticket.
-
-5. Uso di type() e controllo degli oggetti
-All'interno della classe Officina (o in una funzione separata) implementa un metodo, ad esempio:
-statistiche_per_tipo(self)
-
-Questo metodo deve:
-Iterare su tutti i ticket.
-Usare type() (oppure isinstance()) per capire se l'elettrodomestico associato al ticket è una Lavatrice, un Frigorifero o un Forno.
-Contare quanti ticket ci sono per ciascuna sottoclasse.
-
-Stampare un piccolo report, per esempio:
-"Numero di lavatrici in riparazione: X"
-"Numero di frigoriferi in riparazione: Y"
-"Numero di forni in riparazione: Z"
-Requisito: il metodo deve utilizzare type() (o, come variante consigliata, isinstance()) per differenziare in base al tipo reale degli oggetti.
+## 📋 Obiettivi Didattici
+Il progetto dimostra l'applicazione pratica di:
+* **Incapsulamento**: Uso di attributi privati (`__attr`) e getter/setter.
+* **Ereditarietà**: Gerarchia di classi (Elettrodomestico -> Lavatrice, Frigorifero, Forno).
+* **Polimorfismo**: Override del metodo `stima_costo_base()` nelle sottoclassi.
+* **Introspection**: Uso di `type()` o `isinstance()` per la reportistica.
+* **Metodi Variadici**: Gestione di argomenti variabili (`*args`) per il calcolo dei preventivi.
 
 ---
+
+## 📂 Architettura dei File
+**ATTENZIONE**: Rispettare rigorosamente i nomi dei file qui sotto per garantire il funzionamento degli `import` tra i moduli.
+
+| File | Ruolo | Dipendenze |
+| :--- | :--- | :--- |
+| `domain_models.py` | Definisce le entità fisiche (Prodotti). | *Nessuna* |
+| `ticket_system.py` | Gestisce la logica del ticket di riparazione. | Importa da `domain_models` |
+| `workshop_service.py` | Gestisce l'officina e le statistiche. | Importa da `ticket_system` e `domain_models` |
+| `main.py` | Entry point per l'esecuzione e l'integrazione. | Importa tutto |
+
+---
+
+## 👥 Divisione Compiti (Team DEV)
+
+### 📦 DEV Fabio: Domain Master
+**File di lavoro:** `domain_models.py`
+**Obiettivo:** Creare la gerarchia delle classi prodotto (Entity Layer).
+
+* [ ] **Classe Base `Elettrodomestico`**
+    * Attributi privati: `__marca`, `__modello`, `__anno_acquisto`, `__guasto`.
+    * Metodi: Getter/Setter per tutti gli attributi.
+    * Metodo `stima_costo_base(self)`: deve ritornare un valore `float` (es. 50.0), **NON** una stringa.
+* [ ] **Sottoclassi (Lavatrice, Frigorifero, Forno)**
+    * Tutte devono usare `super().__init__(...)`.
+    * **Lavatrice**: Attributi `capacita_kg`, `giri_centrifuga`. Override costo (+20€ se >10kg).
+    * **Frigorifero**: Attributi `litri`, `ha_freezer`. Override costo (+30€ se ha freezer).
+    * **Forno**: Attributi `tipo_alimentazione`, `ha_ventilato`. Override costo (+15€ se a gas).
+
+### 🎫 DEV Gabriele: Transaction Manager
+**File di lavoro:** `ticket_system.py`
+**Obiettivo:** Logica di business del singolo intervento.
+
+* [ ] **Import**: `from domain_models import Elettrodomestico`
+* [ ] **Classe `TicketRiparazione`**
+    * Attributi privati: `__id_ticket`, `__elettrodomestico` (oggetto), `__stato`, `__note` (lista).
+    * Metodi: `aggiungi_nota(testo)`, getter/setter per stato.
+    * **Metodo Variadico**: `calcola_preventivo(self, *voci_extra)`
+        * Logica: Chiama `self.__elettrodomestico.stima_costo_base()` + la somma di `*voci_extra`.
+        * Return: Un valore `float`.
+
+### 🏭 DEV Marco: Operations Manager
+**File di lavoro:** `workshop_service.py`
+**Obiettivo:** Gestione globale e Reporting.
+
+* [ ] **Import**: `from ticket_system import TicketRiparazione` e classi da `domain_models`.
+* [ ] **Classe `Officina`**
+    * Attributi: `nome`, `tickets` (lista vuota inizialmente).
+    * Metodi: `aggiungi_ticket(ticket)`, `chiudi_ticket(id)`.
+    * Report: `stampa_ticket_aperti()`, `totale_preventivi()`.
+    * **Statistiche per Tipo**: `statistiche_per_tipo(self)`
+        * Logica: Itera sui ticket.
+        * Usa `isinstance(ticket.get_elettrodomestico(), Lavatrice)` (o `type()`) per contare quanti oggetti di ogni tipo sono in riparazione.
+        * Stampa il conteggio finale.
+
+### 🚀 TEAM: Integration (Tutti insieme)
+**File di lavoro:** `main.py`
+**Obiettivo:** Testare il flusso completo.
+
+1.  Istanziare 1 Lavatrice, 1 Frigo, 1 Forno.
+2.  Creare l'Officina.
+3.  Creare 3 Ticket e aggiungerli all'officina.
+4.  Testare `calcola_preventivo(10, 20, 5)` con argomenti variabili.
+5.  Lanciare `statistiche_per_tipo()` e verificare l'output.
+
+---
+
+## ⚠️ Linee Guida (Team Leader Rules)
+1.  **Return Types**: I metodi di calcolo devono ritornare numeri, non stringhe. La formattazione valuta ("€") si fa solo nel `print` finale.
+2.  **Incapsulamento**: Mai accedere a `obj.variabile`. Usare sempre `obj.get_variabile()`.
+3.  **Pulizia**: Commentare il codice dove la logica non è immediata.
+4.  **Naming**: Classi in `PascalCase` (es. `TicketRiparazione`), metodi e variabili in `snake_case` (es. `calcola_preventivo`).
