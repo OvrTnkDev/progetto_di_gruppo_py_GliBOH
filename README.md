@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="./Fabio/imm.png" width="100%" alt="D" />
+</div>
+
 # 🔧 Progetto Gestionale Officina "GliBOH"
 
 Software gestionale modulare in Python per un'officina di riparazione elettrodomestici. Il progetto implementa i paradigmi fondamentali della Programmazione Orientata agli Oggetti (OOP).
