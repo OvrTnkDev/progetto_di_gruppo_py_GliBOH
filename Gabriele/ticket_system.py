@@ -31,7 +31,7 @@ Metodi di gestione: Aggiungi nota, cambio stato.
 Output atteso: La classe che gestisce la singola riparazione, capace di accettare un numero variabile di costi extra.'''
 
 
-
+from Fabio.domain_models import Elettrodomestico
 
 class Ticket_system():
     def __init__(self, id_ticket:int, elettrodomestico:str):
@@ -41,7 +41,24 @@ class Ticket_system():
         self.__stato = "aperto"
         self.__note = []
         
+     
+     
+     
+     
+     
+     
+     
         
+#get 
+    def get_id(self):
+        return self.__id_ticket
+
+    def get_stato(self):
+        return self.__stato
+
+    def get_elettrodomestico(self):
+        return self.__elettrodomestico    
+       
   #Metodi di gestione: Aggiungi nota, cambio stato.      
     def aggiungi_nota(self, testo):
         """Aggiunge una nota descrittiva alla lista delle lavorazioni."""
@@ -63,14 +80,15 @@ class Ticket_system():
     #preventivo
     def calcola_preventivo(self, voci_extra):
         
+        costo_base = self.__elettrodomestico.stima_costo_base()
+        totale_extra = sum (voci_extra)
+        return costo_base + totale_extra
         
         
         
         
         
         
-        
-        pass
     
     
     
@@ -78,14 +96,4 @@ class Ticket_system():
     
     
     
-    
-#get 
-    def get_id(self):
-        return self.__id_ticket
 
-    def get_stato(self):
-        return self.__stato
-
-    def get_elettrodomestico(self):
-        return self.__elettrodomestico    
-    
