@@ -24,11 +24,6 @@ class Officina:
     def __init__(self, nome: str):
         self.nome = nome
         self.ticket_list = {} #(lista di oggetti TicketRiparazione) uso il dizionario perche migliora l'accesso tramite k
-        
-    # aggiungi_ticket(self, ticket)
-    # chiudi_ticket(self, id_ticket)
-    # stampa_ticket_aperti(self): mostra ID, tipo di elettrodomestico e stato.
-    # totale_preventivi(self): somma i preventivi di tutti i ticket. 
     
         
     def aggiungi_ticket(self, id_ticket: str, elettrodomestico:str): #id_ticket str perche input utente
@@ -58,14 +53,25 @@ class Officina:
     
     def stampa_ticket_aperti(self):
         if self.ticket_list >= 0:
-            print("nessun Ticket Aperto") # TODO: check se almeno un ticket aperto in dict
+            print("nessun Ticket Aperto")
             return False
+        
+        almeno_uno_aperto = False
+        
+        for k in self.ticket_list.items():
+            if k.get_stato() == "aperto":
+                almeno_uno_aperto = True
+                break
         
         ticket_aperti = [k for k in self.ticket_list.items() if k.get_stato == "aperto"] # Che Eleganza!! AAHAH
         print(ticket_aperti) 
             
     
-    def totale_preventivi(self, voci_extra: list): #TODO : controllare e capire cazzo fa voci_extra
+    def totale_preventivi(self, voci_extra):
+        if voci_extra.strip():
+            voci_extra = voci_extra.split("-")
+            list(voci_extra)
+            
         if self.ticket_list >= 0:
             print("nessun Ticket Aperto")
             return False
@@ -76,6 +82,26 @@ class Officina:
             totale.append(k.calcola_preventivo(voci_extra))
         
         return sum(totale)
+    
+    def statistiche_per_tipo(self):
+        # contatori
+        stats = {"Lavatrice": 0, "Frigorifero": 0, "Forno": 0}
+        
+        for ticket in self.ticket_list.values():
+            el = ticket.get_elettrodomestico 
+            
+            if isinstance(el, Lavatrice):
+                stats["Lavatrice"] += 1
+            elif isinstance(el, Frigorifero):
+                stats["Frigorifero"] += 1
+            elif isinstance(el, Forno):
+                stats["Forno"] += 1
+        
+        # Stampa del report 
+        print(f"\n--- Report Statistiche Officina {self.nome} ---")
+        print(f"Numero di lavatrici in riparazione: {stats['Lavatrice']}")
+        print(f"Numero di frigoriferi in riparazione: {stats['Frigorifero']}")
+        print(f"Numero di forni in riparazione: {stats['Forno']}")
             
         
         
