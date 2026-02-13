@@ -4,6 +4,7 @@ import Marco.workshop_service as ws
 
 print("--- AVVIO SISTEMA GESTIONALE 'GliBOH' ---")
 # creo l'oggetto dell'officina
+
 ###############################
 while True:
     print("\n" + "="*30) #Fortissimo

@@ -1,4 +1,4 @@
-"""📦 FABIO: Il "Domain Master" (File: domain_models.py)
+"""FABIO: Il "Domain Master" (File: domain_models.py)
 Responsabilità:
 Definire le entità fisiche. Non deve importare nulla. È la base del sistema.
 Task:

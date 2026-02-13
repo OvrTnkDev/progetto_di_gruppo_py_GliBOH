@@ -1,18 +1,4 @@
 ''''''
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 '''GAB: Il "Transaction Manager" (File: ticket_system.py)
 Responsabilità: Gestire l'oggetto che collega il lavoro al prodotto. Dipendenze: Deve importare da Dev 1. from domain_models import Elettrodomestico
 
@@ -31,7 +17,7 @@ Metodi di gestione: Aggiungi nota, cambio stato.
 Output atteso: La classe che gestisce la singola riparazione, capace di accettare un numero variabile di costi extra.'''
 
 
-from Fabio.domain_models import Elettrodomestico
+from Fabio.domain_models import Elettrodomestico, Lavatrice, Frigorifero, Forno
 
 class Ticket_system():
     def __init__(self, id_ticket:int, elettrodomestico:str):
@@ -41,12 +27,6 @@ class Ticket_system():
         self.__stato = "aperto"
         self.__note = []
         
-     
-     
-     
-     
-     
-     
      
         
 #get 
@@ -87,13 +67,4 @@ class Ticket_system():
         
         
         
-        
-        
-    
-    
-    
-    
-    
-    
-    
 
