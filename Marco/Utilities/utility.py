@@ -1,5 +1,19 @@
 import inspect
 
+#Validatore di input 
+def input_validato(messaggio, tipo=str):
+    while True:
+        valore = input(f"{messaggio} (o '0' per annullare): ").strip()
+        if valore == '0':
+            return None
+        if not valore:
+            print("Errore: il campo non può essere vuoto.")
+            continue
+        try:
+            return tipo(valore)
+        except ValueError:
+            print(f"Errore: inserire un valore di tipo {tipo.__name__}.")
+
 #Decoratore
 def log_func(funzione):
     def wrapper(*args, **kwargs):
