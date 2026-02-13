@@ -35,6 +35,7 @@ class Elettrodomestico():
         # controllo
         if anno > 2025: 
             print("Errore: Anno nel futuro non valido")
+            return None
         else:
             self.__anno_acquisto = anno
 
@@ -52,7 +53,7 @@ class Elettrodomestico():
 class Lavatrice(Elettrodomestico):
     def __init__(self, marca, modello, anno_acquisto, guasto, capacita_kg, giri_centrifuga):
         # Chiamata al costruttore del padre
-        super().__init__(marca, modello, anno_acquisto, guasto)
+        super().__init__(marca, modello, self.set_anno_acquisto(anno_acquisto), guasto)
         self.__capacita_kg = capacita_kg
         self.__giri_centrifuga = giri_centrifuga
     
@@ -92,7 +93,7 @@ class Forno(Elettrodomestico):
         return costo
 
 
-# prove
+"""# prove
 l = Lavatrice("Samsung", "EcoBubble", 2020, "Non scarica", 12, 1200)
 print(l.descrizione())
-print(f"Preventivo base: {l.stima_costo_base()}€")
+print(f"Preventivo base: {l.stima_costo_base()}€")"""

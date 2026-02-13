@@ -20,15 +20,13 @@ Output atteso: La classe che gestisce la singola riparazione, capace di accettar
 from Fabio.domain_models import Elettrodomestico, Lavatrice, Frigorifero, Forno
 
 class Ticket_system():
-    def __init__(self, id_ticket:int, elettrodomestico:str):
-        #super.__init__()
+    def __init__(self, id_ticket:int, elettrodomestico: Elettrodomestico):
         self.__id_ticket = id_ticket
-        self.__elettrodomestico = elettrodomestico  # Dipendenza da classe Elettrodomestico
+        self.__elettrodomestico = elettrodomestico
         self.__stato = "aperto"
         self.__note = []
         
      
-        
 #get 
     def get_id(self):
         return self.__id_ticket
@@ -63,8 +61,3 @@ class Ticket_system():
         costo_base = self.__elettrodomestico.stima_costo_base()
         totale_extra = sum (voci_extra)
         return costo_base + totale_extra
-        
-        
-        
-        
-

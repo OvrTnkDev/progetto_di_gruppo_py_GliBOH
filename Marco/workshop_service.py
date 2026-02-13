@@ -1,6 +1,6 @@
 from Gabriele.ticket_system import Ticket_system
 from Fabio.domain_models import Lavatrice, Frigorifero, Forno
-from Utilities.utility import log_func
+#from Utilities.utility import log_func
 
 
 class Officina:
@@ -47,30 +47,37 @@ class Officina:
         
         almeno_uno_aperto = False
         
-        for k in self.ticket_list.items():
-            if k.get_stato() == "aperto":
+        for k, v in self.ticket_list.items():
+            if v.get_stato() == "aperto":
                 almeno_uno_aperto = True
                 break
         
-        ticket_aperti = [k for k in self.ticket_list.items() if k.get_stato == "aperto"] # Che Eleganza!! AAHAH
-        print(ticket_aperti) 
+        ticket_aperti = [v for v in self.ticket_list.values() if v.get_stato() == "aperto"] # Che Eleganza!! AAHAH
+        if almeno_uno_aperto:
+            for ticket in ticket_aperti:
+                print(f"\n--- Ticket ID: {ticket.get_id()} ---")
+                print(ticket.get_elettrodomestico().descrizione())
             
     
-    def totale_preventivi(self, voci_extra=0):
-        if voci_extra.strip():
-            voci_extra = voci_extra.split("-")
-            list(voci_extra)
-            
-        if self.ticket_list >= 0:
+    def totale_preventivi(self, voci_extra:dict = None):
+        
+        if len(self.ticket_list) == 0:
             print("nessun Ticket Aperto")
             return False
         
+        for k, v in voci_extra.items():
+            if not isinstance(v, (int, float)):
+                print(f"Voce extra '{k}' non valida. Deve essere un numero.")
+                return None
+            
         totale = []
     
-        for k in self.ticket_list.items():
-            totale.append(k.calcola_preventivo(voci_extra))
-        
-        return sum(totale)
+        for k, v in self.ticket_list.items():
+            if v.get_stato() == "aperto":
+                costo_base = v.get_elettrodomestico().stima_costo_base()
+                totale.append(costo_base)
+                
+        return sum(totale) + sum(voci_extra.values()) if voci_extra else sum(totale)
     
     def statistiche_per_tipo(self):
         # contatori
@@ -96,7 +103,3 @@ class Officina:
         print(f"Numero di lavatrici in riparazione: {stats['Lavatrice']}")
         print(f"Numero di frigoriferi in riparazione: {stats['Frigorifero']}")
         print(f"Numero di forni in riparazione: {stats['Forno']}")
-            
-        
-        
-        

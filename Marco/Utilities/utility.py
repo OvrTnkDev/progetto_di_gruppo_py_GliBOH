@@ -24,20 +24,20 @@ def log_func(funzione):
 
 
 @staticmethod   
-    def zero_checker(func):
-        @wraps(func)
-        def wrapper(self, *args, **kwargs):
-            #Run del metodo wrappato
-            result = func(self, *args, **kwargs)
-            if hasattr(self, 'inventario'):
-                self.inventario = {k: v for k, v in self.inventario.items() if v.unita > 0}
-            
-                # for k, v in self.inventario:
-                #     if v.unita <= 0: 
-                #         del self.inventario[k]
-            
-            return result
-        return wrapper
+def zero_checker(func):
+    @wrapper(func)
+    def wrapper(self, *args, **kwargs):
+        #Run del metodo wrappato
+        result = func(self, *args, **kwargs)
+        if hasattr(self, 'inventario'):
+            self.inventario = {k: v for k, v in self.inventario.items() if v.unita > 0}
+        
+            # for k, v in self.inventario:
+            #     if v.unita <= 0: 
+            #         del self.inventario[k]
+        
+        return result
+    return wrapper
     
 def asker(self, categoria: str):
         ''' Trova i parametri necessari e chiede l'input all'utente '''
