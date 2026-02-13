@@ -19,7 +19,7 @@
 # Output atteso: La classe che governa l'intero processo e genera le statistiche.
 
 from Gabriele.ticket_system import Ticket_system
-# from domain_models import Lavatrice, Frigorifero, Forno
+from Fabio.domain_models import Lavatrice, Frigorifero, Forno
 class Officina:
     def __init__(self, nome: str):
         self.nome = nome
@@ -27,32 +27,38 @@ class Officina:
     
         
     def aggiungi_ticket(self, id_ticket: str, elettrodomestico:str): #id_ticket str perche input utente
-        if id_ticket in  self.ticket_list.keys:
+        if id_ticket in  self.ticket_list.keys():
             print(f"Ticket {self.ticket_list} già esistente ")
             return None
         
         ticket_OBJ = Ticket_system(id_ticket, elettrodomestico )
         
-        self.ticket_list[str(ticket_OBJ.id_ticket)] = ticket_OBJ
+        self.ticket_list[str(ticket_OBJ.get_id())] = ticket_OBJ
         return True
 
     def chiudi_ticket(self, id_ticket: str):
-        if not id_ticket in self.ticket_list.keys:
+        if not id_ticket in self.ticket_list.keys():
             print(f"Ticket {self.ticket_list} non esiste")
             return None
         
         ticket_da_chiudere = ""
         
-        for k , v in self.ticket_list.items():
-            if k == id_ticket:
-                ticket_da_chiudere = v
+        # for k , v in self.ticket_list.items():
+        #     if k == id_ticket:
+        #         ticket_da_chiudere = v
         
-        ticket_da_chiudere.cambia_stato("chiuso")
-        return True
-            
+        # ticket_da_chiudere.cambia_stato("chiuso")
+        # return True
+        
+        ticket = self.ticket_list.get(id_ticket)
+        if ticket:
+            ticket.cambia_stato("chiuso")
+            return True
+        print(f"Ticket {id_ticket} non trovato.")
+        return False
     
     def stampa_ticket_aperti(self):
-        if self.ticket_list >= 0:
+        if len(self.ticket_list) == 0:
             print("nessun Ticket Aperto")
             return False
         
