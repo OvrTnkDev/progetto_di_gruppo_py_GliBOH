@@ -20,6 +20,9 @@
 
 from Gabriele.ticket_system import Ticket_system
 from Fabio.domain_models import Lavatrice, Frigorifero, Forno
+from Utilities.utility import log_func
+
+
 class Officina:
     def __init__(self, nome: str):
         self.nome = nome
@@ -73,7 +76,7 @@ class Officina:
         print(ticket_aperti) 
             
     
-    def totale_preventivi(self, voci_extra):
+    def totale_preventivi(self, voci_extra=0):
         if voci_extra.strip():
             voci_extra = voci_extra.split("-")
             list(voci_extra)
@@ -94,7 +97,7 @@ class Officina:
         stats = {"Lavatrice": 0, "Frigorifero": 0, "Forno": 0}
         
         for ticket in self.ticket_list.values():
-            el = ticket.get_elettrodomestico 
+            el = ticket.get_elettrodomestico()
             
             if isinstance(el, Lavatrice):
                 stats["Lavatrice"] += 1
@@ -102,6 +105,11 @@ class Officina:
                 stats["Frigorifero"] += 1
             elif isinstance(el, Forno):
                 stats["Forno"] += 1
+        
+        # stats = {}
+        # for ticket in self.ticket_list.values():
+        #     tipo = type(ticket.get_elettrodomestico()).__name__
+        #     stats[tipo] = stats.get(tipo, 0) + 1
         
         # Stampa del report 
         print(f"\n--- Report Statistiche Officina {self.nome} ---")
