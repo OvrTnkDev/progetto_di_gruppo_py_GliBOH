@@ -1,23 +1,3 @@
-# Task: Devi implementare la Classe Officina.
-
-# Gestione Lista: Una lista self.tickets per contenere gli oggetti creati da Dev 2.
-
-# CRUD base: aggiungi_ticket(ticket), chiudi_ticket(id).
-
-# Metodo statistiche_per_tipo(self) (Il requisito del type):
-
-# Itera sulla lista dei ticket.
-
-# Estrai l'elettrodomestico da ogni ticket.
-
-# Usa type(obj) is Lavatrice (o isinstance) per incrementare dei contatori separati.
-
-# Stampa il report finale.
-
-# Metodo totale_preventivi: Chiama i preventivi di tutti i ticket e fai la somma totale.
-
-# Output atteso: La classe che governa l'intero processo e genera le statistiche.
-
 from Gabriele.ticket_system import Ticket_system
 from Fabio.domain_models import Lavatrice, Frigorifero, Forno
 from Utilities.utility import log_func
