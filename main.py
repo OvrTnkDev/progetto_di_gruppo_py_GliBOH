@@ -3,6 +3,7 @@ import Fabio.domain_models as dm
 import Gabriele.ticket_system as ts
 import Marco.workshop_service as ws
 import time
+from datetime import date as dt
 
 print("--- AVVIO SISTEMA GESTIONALE 'GliBOH' ---")
 # creo l'oggetto dell'officina
@@ -10,7 +11,7 @@ officina = ws.Officina("GliBOH")
 ###############################
 while True:
     print("\n" + "="*30) #Fortissimo
-    print(f"MENU PRINCIPALE - {officina.nome}")
+    print(f"MENU PRINCIPALE - {officina.nome} - {dt.today().isoformat()}")
     print("="*30) #questo  è più HARD
     print("1. Inserisci nuovo Elettrodomestico (Apre Ticket)")
     print("2. Visualizza Ticket Aperti")
@@ -22,6 +23,7 @@ while True:
     scelta = input("Seleziona un'opzione: ")
     match scelta:
         case "0":
+            
             print("Uscita in corso... Arrivederci!")
             break
         
